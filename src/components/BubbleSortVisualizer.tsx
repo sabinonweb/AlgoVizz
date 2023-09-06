@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 
 const BubbleSortVisualizer = () => {
   const [array, setArray] = useState<number[]>([]);
-  const [sorted, setSorted] = useState<bool>(false);
+  const [sorted, setSorted] = useState<boolean>(false);
+  const [isSorting, setIsSorting] = useState<boolean>(false);
 
   let randomArray: number[] = [];
   let storeArray: number[] = [];
@@ -17,13 +18,22 @@ const BubbleSortVisualizer = () => {
 
   const handleSorted = () => {
     const sortedArray = bubbleSort(randomArray);
+
+    for (let i = 0; i < sortedArray.length; i++) {
+      setTimeout(() => {
+        setArray([...sortedArray.slice(0, i + 1), ...array.slice(i + 1)]);
+      }, i * 500);
+    }
+
     setArray(sortedArray);
     setSorted(true);
+    setIsSorting(true);
   };
 
   const handleReset = () => {
     setArray(storeArray);
     setSorted(false);
+    setIsSorting(false);
   };
 
   const handleNew = () => {
